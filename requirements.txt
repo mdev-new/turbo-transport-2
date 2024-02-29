@@ -1,2 +1,5 @@
-Django
-pyrosm
+Django~=5.0.2
+pyrosm~=0.6.2
+requests~=2.31.0
+networkx~=3.2.1
+osmnx~=1.9.1

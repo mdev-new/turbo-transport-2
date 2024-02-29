@@ -1,0 +1,18 @@
+
+Kurva rychle po pardubicich
+---------------------------
+
+Kdyz dojdes na node (zastavku), tak stop A*, pridat novy edge ktery bude mit edge
+s vahou na zaklade (cekaci cas)+(cas jizdy)
+
+Pridat edge pro kazdou linku
+
+Pesi radius hledani 500m (nebo delka tridy miru)
+
+Pokud uzivatel specha, hledat extremni pesi zkratky
+ (garantovat opravdu casove nejkratsi cestu)
+
+
+A* - Pouzit rychlost * vzdalenost jako pribliznou vzdalenost do dalsi zastavky
+
+Vazit prestupy ?

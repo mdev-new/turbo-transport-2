@@ -2,12 +2,45 @@
 
 {% block body %}
 
+<script>
+$(document).ready(function () {
+  $('select').selectize({
+    sortField: 'text'
+  });
+});
+</script>
+
 <div class="flex flex-col items-center gap-y-8">
-    <form hx-post="/search" hx-target="#results" class="flex flex-col gap-2 w-40 hover:shadow-md p-1">
+
+    <form hx-post="/search" hx-target="#results" class="flex flex-col gap-2 min-w-20 hover:shadow-lg border-4 p-4">
         {% csrf_token %}
-        <input name="from" placeholder="Z..." class="text-center">
-        <input name="to" placeholder="Kam..." class="text-center">
-        <button type="submit" class="border-2 bg-white hover:bg-red-300 active:bg-red-600">Hledat</button>
+        <div class="flex flex-row gap-2">
+            <div class="flex flex-col gap-2 w-1/2 text-center">
+                <label for="from">Vychozi stanice</label>
+                <select id="from" name="from">
+                    {% include '_stations.html' %}
+                </select>
+            </div>
+            <div class="flex flex-col gap-2 w-1/2 text-center">
+                <label for="to">Konecna stanice</label>
+                <select id="to" name="to">
+                    {% include '_stations.html' %}
+                </select>
+            </div>
+        </div>
+        <hr>
+        <div class="flex flex-row gap-2">
+            <div class="flex flex-col gap-2 text-center items-center">
+                <label for="urge">Uroven spechu</label>
+                <input type="range" class="w-1/2" min="1" max="5" value="3" id="urge" name="urge">
+            </div>
+            <div class="flex flex-col gap-2 text-center items-center">
+                <label for="urge">Rychlost chuze</label>
+                <input type="range" class="w-1/2" min="1" max="5" value="3" id="walk_speed" name="walk_speed">
+            </div>
+        </div>
+        <hr>
+        <button type="submit" class="border-2 bg-white hover:bg-blue-300 active:bg-violet-600">Hledat</button>
     </form>
 
     <div id="results"></div>
