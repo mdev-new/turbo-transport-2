@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="flex flex-col items-center gap-y-8">
+    <form hx-post="/search" hx-target="#results" class="flex flex-col gap-2 w-40 hover:shadow-md p-1">
+        {% csrf_token %}
+        <input name="from" placeholder="Z..." class="text-center">
+        <input name="to" placeholder="Kam..." class="text-center">
+        <button type="submit" class="border-2 bg-white hover:bg-red-300 active:bg-red-600">Hledat</button>
+    </form>
+
+    <div id="results"></div>
+
+</div>
+
+{% endblock %}
