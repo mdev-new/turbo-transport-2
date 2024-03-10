@@ -4,15 +4,38 @@ Kurva rychle po pardubicich
 
 Kdyz dojdes na node (zastavku), tak stop A*, pridat novy edge ktery bude mit edge
 s vahou na zaklade (cekaci cas)+(cas jizdy)
+ - mozna tohle udelat pro kazdou zastavku s predstihem
 
 Pridat edge pro kazdou linku
 
 Pesi radius hledani 500m (nebo delka tridy miru)
 
-Pokud uzivatel specha, hledat extremni pesi zkratky
+Pokud uzivatel specha, hledat extremni pesi zkratky a prestupy
  (garantovat opravdu casove nejkratsi cestu)
 
+Pokud uzivatel nespecha, hledat cesty jen pres autobusy (nevadi ze si nekde pocka...)
 
-A* - Pouzit rychlost * vzdalenost jako pribliznou vzdalenost do dalsi zastavky
+A* - Pouzit cas do dalsi zastavky jako pribliznou vzdalenost do dalsi zastavky
 
-Vazit prestupy ?
+s = v*t
+s/v = t
+
+PYROSM - Nacitani dat / vyroba networku (?)
+OSMNX - ?
+NetworkX -
+
+Finalni goal:
+ 1. Vyparsovat vsechny autobusovy linky z mapy
+ 2. Vyparsovat zastavky z mapy, z kazdy si vyrobit objekt
+   -> Struktura objektu:
+     - Predchozi zastavka (gps/nazev/...)
+     - Dalsi zastavka (gps/nazev/...)
+ 3. Ke kazdy zastavce podle jmena priradit jizdni rad (? - mozna tohle udelat az pri
+    vyhledavani)
+ 4. Pri vyhledavani
+   - Ke kazdy zastavce si najit prichozi spoje a vyextrahovat si jejich
+     aktualni jr (/api/route, /api/busConnectionDetail, /api/stationConnections, /api/currentConnections)
+   - Na kazdej edge pridat vahu podle 1/((cekaci cas na zastavce)+(cas na useku))
+
+
+ // Vazit prestupy ? - NE, prestupy muzou bejt dobry i spatny

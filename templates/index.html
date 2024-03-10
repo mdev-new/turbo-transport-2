@@ -12,7 +12,7 @@ $(document).ready(function () {
 
 <div class="flex flex-col items-center gap-y-8">
 
-    <form hx-post="/search" hx-target="#results" class="flex flex-col gap-2 min-w-20 hover:shadow-lg border-4 p-4">
+    <form hx-post="/search" hx-target="#results" class="flex flex-col gap-2 min-w-20 hover:shadow-lg hover:bg-white hover:border-0 border-4 p-4 min-h-[50vh]">
         {% csrf_token %}
         <div class="flex flex-row gap-2">
             <div class="flex flex-col gap-2 w-1/2 text-center">
@@ -35,7 +35,7 @@ $(document).ready(function () {
                 <input type="range" class="w-1/2" min="1" max="5" value="3" id="urge" name="urge">
             </div>
             <div class="flex flex-col gap-2 text-center items-center">
-                <label for="urge">Rychlost chuze</label>
+                <label for="walk_speed">Rychlost chuze</label>
                 <input type="range" class="w-1/2" min="1" max="5" value="3" id="walk_speed" name="walk_speed">
             </div>
         </div>

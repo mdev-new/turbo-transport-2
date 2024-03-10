@@ -12,8 +12,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" />
 
 </head>
-<body class="m-3 bg-slate-100">
-    {% block body %}
-    {% endblock body %}
+<body class="m-3 bg-slate-100 text-2xl">
+    <div class="h-[93vh]">
+        {% block body %}
+        {% endblock body %}
+    </div>
+    <footer class="text-center text-sm">
+        <hr>
+        Algoritmus by <a class="text-blue-600 hover:underline" href="https://github.com/X3nom">Kuba</a>
+    </footer>
 </body>
 </html>

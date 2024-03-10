@@ -1,0 +1,31 @@
++========+
+|DPMP API|
++========+
+
+API key (staticky): "3e86570d-56a1-4ec1-8012-c1a9f98d18cc"
+
+Kody zastavek (napr. bezbarierova, atd.)
+----------------------------------------
+/api/codes
+
+Seznam vsech linek a jejich zastavek
+------------------------------------
+/api/lines
+
+Info o vsech zastavkach
+-----------------------
+/api/stations
+
+Route linky - GPS souradnice (is this really necessary? - podle me staci zastavky)
+----------------------------
+/api/route?line=LINE_NUMBER
+
+Aktualni stav vsech autobusu ktery jedou
+----------------------------------------
+/api/buses
+
+
+/api/stationConnections?station=STATION_NUMBER
+/api/busConnectionDetail?line=LINE_NUMBER&number=BUS_NUMBER
+/api/currentConnections&line=LINE_NUMBER
+
