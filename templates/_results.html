@@ -1,9 +1,5 @@
 <ul>
-
-<p>{{text}}</p>
-
-<li>
-{{results}}
-</li>
-
+    {% for result in results %}
+        <li>{{ result.edge.public_line }}</li>
+    {% endfor %}
 </ul>

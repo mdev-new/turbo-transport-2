@@ -1,23 +1,5 @@
 <optgroup label="Pardubice">
-    <option>Strossova</option>
-    <option>K Nemocnici</option>
-    <option>Na Okrouhliku</option>
-    <option>U Kostelicka</option>
-    <option>Pardubice - Pardubicky</option>
-    <option>Nemocnice</option>
-    <option>Kyjevska</option>
-    <option>Prumyslova</option>
-    <option>ERA - Zamecek</option>
-    <option>Zamecek</option>
-    <option>Zdravotnicka skola</option>
-    <option>Hlavni nadrazi</option>
-    <option>Masarykovo namesti</option>
-    <option>Namesti republiky</option>
-    <option>Sukova</option>
-    <option>U Marka</option>
-    <option>Palackeho</option>
-    <option>11. Listopadu</option>
-    <option>Trida miru</option>
-    <option>U Grandu</option>
-    <option>Krajsky urad</option>
+    {% for station in stations %}
+        <option>{{station}}</option>
+    {% endfor %}
 </optgroup>
