@@ -19,5 +19,6 @@ from django.urls import path
 from django.urls import include, path
 
 urlpatterns = [
-	path('', include('search.urls'))
+    path('', include('search.urls')),
+    path('', include('personalized.urls'))
 ]

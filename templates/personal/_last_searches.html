@@ -1,0 +1,17 @@
+{# If we actually have anything to show... #}
+{% if searches %}
+<div class="border-2 min-h-[93vh]">
+
+<h1 class="text-center font-bold">Posledni hledani</h1>
+<hr>
+
+<ul>
+
+{% for search in searches %}
+    <li><a href="/" class="hover:underline hover:text-blue-600">{{search}}</a></li>
+{% endfor %}
+
+</ul>
+
+{% endif %}
+</div>
