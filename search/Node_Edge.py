@@ -4,12 +4,13 @@ from search.utils import overlapping_pairs, haversine
 class Edge:
     length = 0.0
     transport_method = "foot"
+    transport_network = "dpmp"
     public_line = -1
 
-    def __init__(self, transport_method, public_line=-1, path=None):
+    def __init__(self, transport_method, transport_network, public_line=-1, path=None):
+        self.length = 0.0
         self.public_line = public_line
         self.transport_method = transport_method
-        self.length = 0.0
         if path is not None:
             for a, b in overlapping_pairs(path):
                 self.length += haversine(a, b)
@@ -23,11 +24,11 @@ class Node:
     platform_for = -1
     platform_number = -1
 
-    def __init__(self, number: int, lat, lon, name, platform_for=-1, platform_number=-1):
+    def __init__(self, number: int, lat: float, lon: float, name: str, platform_for=-1, platform_number=-1):
+        self.number = number
         self.lat = lat
         self.lon = lon
         self.name = name
-        self.number = number
         self.platform_for = platform_for
         self.platform_number = platform_number
 

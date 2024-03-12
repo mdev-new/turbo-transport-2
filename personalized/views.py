@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 
 
@@ -9,6 +10,8 @@ def login(req):
 
 
 def register(req):
+    if req.method != "POST":
+        return HttpResponse("Not a post request!", status_code=403)
     pass
 
 
@@ -19,10 +22,11 @@ def logout(req):
 
 def last_searches(req):
     context = {
-        'searches': [
+        # Todo pull this from db
+        'searches': enumerate([
             'Strossova - Namesti republiky',
             'Hlavni nadrazi - Nem.'
-        ]
+        ])
     }
     return render(req, 'personal/_last_searches.html', context)
 

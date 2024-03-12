@@ -1,14 +1,9 @@
 import math
 from math import sin, cos, sqrt, atan2
+from .constants import EARTH_RADIUS, DPMP_APIKEY, DEG_TO_RAD
 
 import requests
-
-# Thanks unknown student for making this key static :)))))))
-# :)))))))))))))))))))))))))))))))))))))))))))))))))))))))))
-DPMP_APIKEY = "3e86570d-56a1-4ec1-8012-c1a9f98d18cc"
-DEG_TO_RAD = math.pi / 180
-EARTH_RADIUS = 6371  # km
-
+from functools import cache
 
 def get_dpmp(thing):
     req = requests.request(
@@ -17,8 +12,11 @@ def get_dpmp(thing):
         json=('{"key":"' + DPMP_APIKEY + '"}')
     )
 
-    return req
+    return req.json()
 
+@cache
+def get_line_connections(line):
+    return get_dpmp(f"currentConnections?line={line}")
 
 def get_overpass(url):
     return requests.get(url).json()

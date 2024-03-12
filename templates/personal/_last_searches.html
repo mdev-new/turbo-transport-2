@@ -7,8 +7,8 @@
 
 <ul>
 
-{% for search in searches %}
-    <li><a href="/" class="hover:underline hover:text-blue-600">{{search}}</a></li>
+{% for idx, search in searches %}
+    <li><a href="/search?source=link_history&search_idx={{idx}}" class="hover:underline hover:text-blue-600">{{search}}</a></li>
 {% endfor %}
 
 </ul>

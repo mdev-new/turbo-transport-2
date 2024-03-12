@@ -1,7 +1,7 @@
-from astar import AStar, T
+from astar import AStar
 
 from search.Node_Edge import Node, GraphEntry
-from search.utils import haversine
+from search.utils import haversine, get_line_connections
 
 
 # Todo: Distance/weight between
@@ -21,12 +21,19 @@ class PathFinder(AStar):
         return self.graph.getLinks(node)
 
     # The distance (weight) between two nodes
-    def distance_between(self, n1, n2):
+    def distance_between(self, n1: GraphEntry, n2: GraphEntry):
         # for distance on foot, look at the length of the edge
-        if n2.edge.length is not None:
+        edge = n2.edge
+        if edge.length is not None and edge.transport_method == 'foot':
             return n2.edge.length / self.walk_speed
         else:
-            # todo for buses (and train etc), pull this from the time table
+
+            line_connections = get_line_connections(edge.public_line)
+
+            # Todo select the right direction
+            # Todo get departureTime for the next stop
+            # and return current time - departure time
+
             return 5
 
     # An estimate of the distance/cost between current node and the end
@@ -40,9 +47,9 @@ class PathFinder(AStar):
         return haversine(current_pos, goal_pos) / 18  # let's assume 18 km/h to be the avg speed
 
     def is_goal_reached(self, current, goal):
-        nA = self.graph.getNode(current)
-        nB = self.graph.getNode(goal)
-        return nA.number == nB.number
+        node_a = self.graph.getNode(current)
+        node_b = self.graph.getNode(goal)
+        return node_a.number == node_b.number
 
     def search(self, start, goal, bus_snapshot, walk_speed, urge, reverse_path=False):
         self.bus_snapshot = bus_snapshot

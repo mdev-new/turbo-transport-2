@@ -1,5 +1,5 @@
 <ul>
     {% for result in results %}
-        <li>{{ result.edge.public_line }}</li>
+        <li>{{result.node.name }} {{ result.edge.public_line }}</li>
     {% endfor %}
 </ul>

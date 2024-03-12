@@ -4,27 +4,32 @@
 
 <script>
 $(document).ready(() => {
-  $('select').selectize({
-    sortField: 'text'
-  });
+    setTimeout(() => {
+      $('select').selectize({
+        sortField: 'text'
+      });
+    }, 250)
 });
-
-function updateSpeed(element) {
-    document.getElementById("walk_speed_number").innerHTML = `${element.value * 2.5} km/h`
-}
 
 function getUrgeString(urge) {
     switch(Number.parseInt(urge)) {
-        case 1: return "Nespecham"
+        case 0: return "Nech me spat"
+        case 1: return "Fakt nespecham, take your time"
         case 2: return "Mirne specham"
-        case 3: return "Stredne specham"
-        case 4: return "Dost specham"
-        case 5: return "Kurva hodne specham;<br>najdi mi brutalni spojeni!!!"
+        case 3: return "Chci se vejit do 5min pozdniho prichodu"
+        case 4: return "\"Kurva ridici slapni na to uz konecne a neser!!!\""
+        case 5: return "<b>Kurva hodne specham;<br>najdi mi brutalni spojeni!!!<br>Budu treba litat kdyz to bude potreba!!!</b>"
     }
 }
 
 function updateUrge(element) {
+    console.log(element)
     document.getElementById("urge_text").innerHTML = getUrgeString(element.value)
+}
+
+function updateSpeed(element) {
+    console.log(element)
+    document.getElementById("walk_speed_number").innerHTML = `${element.value} km/h`
 }
 
 </script>
@@ -52,13 +57,13 @@ function updateUrge(element) {
         <div class="flex flex-row gap-2">
             <div class="flex flex-col gap-2 text-center items-center">
                 <label for="urge">Uroven spechu</label>
-                <input type="range" class="w-1/2" min="1" max="5" value="3" id="urge" name="urge" onchange="updateUrge(this)">
-                <i class="text-lg" id="urge_text">Mirne specham</i>
+                <input type="range" class="w-1/2" min="0" max="5" id="urge" name="urge" onchange="updateUrge(this)">
+                <i class="text-lg" id="urge_text"></i>
             </div>
             <div class="flex flex-col gap-2 text-center items-center">
                 <label for="walk_speed">Rychlost chuze</label>
-                <input type="range" class="w-1/2" min="1" max="5" value="3" id="walk_speed" name="walk_speed" onchange="updateSpeed(this)">
-                <i class="text-lg" id="walk_speed_number">7.5 km/h</i>
+                <input type="range" class="w-1/2" min="1" max="16.1" step="2.5" id="walk_speed" name="walk_speed" onchange="updateSpeed(this)">
+                <i class="text-lg" id="walk_speed_number"></i>
             </div>
         </div>
         <hr>
@@ -66,6 +71,11 @@ function updateUrge(element) {
     </form>
     <div id="results"></div>
 </div>
+
+<script>
+    updateSpeed(document.getElementById('walk_speed'))
+    updateUrge(document.getElementById('urge'))
+</script>
 
 {% endblock %}
 

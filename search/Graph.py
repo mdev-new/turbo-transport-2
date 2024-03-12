@@ -1,6 +1,8 @@
 from search.NodeLookup import NodeLookup
 from search.Node_Edge import GraphEntry, Node, Edge
 from search.utils import overlapping_pairs
+import pickle
+from pathlib import Path
 
 
 # fixme refactor
@@ -51,10 +53,12 @@ class Graph:
     adjList = None
     station_lookup = None
     timetables = {}
+    savefile = ""
 
-    def __init__(self, _lines, _stations, _timetables):
+    def __init__(self, _lines, _stations, _timetables, savefile="save.pickle"):
         self.station_lookup = NodeLookup(get_station_index)
         self.timetables = _timetables
+        self.savefile = savefile
 
         for station in _stations:
             name = station['name']
@@ -84,6 +88,14 @@ class Graph:
             for prev, cur in overlapping_pairs(stops):
                 if (cur['number'] in self.station_lookup) and (prev['number'] in self.station_lookup):
                     self.setBoth(self.station_lookup[prev['number']], self.station_lookup[cur['number']], Edge('public', line['number']))
+
+    # TODO
+    # def __new__(cls, *args, **kwargs):
+    #     if Path(savefile).is_file():
+    #         with open(savefile, 'rb') as f:
+    #             return pickle.load(f)
+    #     else:
+    #         return super().__new__(cls, args, kwargs)
 
     def makeNode(self, node: int):
         if node not in self.adjList:
@@ -116,3 +128,7 @@ class Graph:
             print(
                 f'{self.station_lookup[node].name} -> {[(self.station_lookup[entry.node].name, entry.edge) for entry in values]}'
             )
+
+    def save(self):
+        with open(self.savefile, 'wb') as f:
+            pickle.dump(self, f)
