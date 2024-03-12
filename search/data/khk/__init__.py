@@ -1,7 +1,10 @@
-from search.DataProvider import DataProvider
+from search.data import DataProvider
 
+# Kralovehradecky kraj most likely doesn't provide public data about
+# buses on-the-go.
+# So, everything will have to be pulled out from the timetable.
 
-class CDDataProvider(DataProvider):
+class KhkDataProvider(DataProvider):
 
     def get_stations(self):
         pass

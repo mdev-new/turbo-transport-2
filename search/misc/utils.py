@@ -1,22 +1,8 @@
 import math
 from math import sin, cos, sqrt, atan2
-from .constants import EARTH_RADIUS, DPMP_APIKEY, DEG_TO_RAD
+from .constants import EARTH_RADIUS, DEG_TO_RAD
 
 import requests
-from functools import cache
-
-def get_dpmp(thing):
-    req = requests.request(
-        "POST",
-        f'https://online.dpmp.cz/api/{thing}',
-        json=('{"key":"' + DPMP_APIKEY + '"}')
-    )
-
-    return req.json()
-
-@cache
-def get_line_connections(line):
-    return get_dpmp(f"currentConnections?line={line}")
 
 def get_overpass(url):
     return requests.get(url).json()

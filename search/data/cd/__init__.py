@@ -1,28 +1,22 @@
-from abc import ABC, abstractmethod
+from search.data import DataProvider
 
-# Based on the DPMP API.
 
-class DataProvider(ABC):
-    @abstractmethod
+class CDDataProvider(DataProvider):
+
     def get_stations(self):
         pass
 
-    @abstractmethod
     def get_lines(self):
         pass
 
-    @abstractmethod
     def get_all_vehicle_state(self):
         pass
 
-    @abstractmethod
     def get_line_connections(self, line):
         pass
 
-    @abstractmethod
     def get_station_connections(self, station):
         pass
 
-    @abstractmethod
     def get_connection(self, line, vehicle):
         pass

@@ -1,7 +1,7 @@
 from astar import AStar
 
-from search.Node_Edge import Node, GraphEntry
-from search.utils import haversine, get_line_connections
+from search.pathfinder.graph import Node, GraphEntry
+from search.misc.utils import haversine
 
 
 # Todo: Distance/weight between
@@ -49,7 +49,7 @@ class PathFinder(AStar):
     def is_goal_reached(self, current, goal):
         node_a = self.graph.getNode(current)
         node_b = self.graph.getNode(goal)
-        return node_a.number == node_b.number
+        return node_a.identifier == node_b.identifier
 
     def search(self, start, goal, bus_snapshot, walk_speed, urge, reverse_path=False):
         self.bus_snapshot = bus_snapshot

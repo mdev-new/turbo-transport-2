@@ -1,6 +1,8 @@
 import requests
 
-from search.DataProvider import DataProvider
+from search.data.DataProvider import DataProvider
+
+from functools import cache
 
 
 class DpmpDataProvider(DataProvider):
@@ -9,6 +11,7 @@ class DpmpDataProvider(DataProvider):
     def __init__(self, apikey):
         self.api_key = apikey
 
+    @cache  # Todo: limit this cache to smth like two minutes of lifetime
     def _fetch(self, thing):
         return requests.request(
             "POST",
@@ -26,7 +29,7 @@ class DpmpDataProvider(DataProvider):
         return self._fetch("buses")
 
     def get_line_connections(self, line):
-        pass
+        return self._fetch(f"currentConnections?line={line}")
 
     def get_station_connections(self, station):
         pass

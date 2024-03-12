@@ -1,52 +1,26 @@
-from search.NodeLookup import NodeLookup
-from search.Node_Edge import GraphEntry, Node, Edge
-from search.utils import overlapping_pairs
+from search.pathfinder.graph import AdjacentList
+from search.pathfinder.graph import StationLookup
+from search.pathfinder.graph import Node, Edge
+from search.misc.utils import overlapping_pairs
 import pickle
-from pathlib import Path
 
 
-# fixme refactor
-def get_station_index(self, k):
-    if isinstance(k, int):
-        return k  # we already have the index
+class GraphEntry:
+    node = None
+    edge = None
 
-    elif isinstance(k, str):
-        for key, value in self.items():
-            if value.name == k:
-                return key
+    def __init__(self, node, edge):
+        self.node = node
+        self.edge = edge
 
-    elif isinstance(k, Node):
-        for key, val in self.items():
-            if val == k: return key
+    def __eq__(self, other):
+        if isinstance(other, GraphEntry):
+            return self.node == other.node
+        else:
+            return self.node == other
 
-    elif isinstance(k, GraphEntry):
-        for key, value in self.items():
-            if value.number == k.node:
-                return key
-
-    print(f"Didn't find a key: {k.number}")
-
-
-# fixme refactor
-def get_adjlist_index(self, k):
-    if isinstance(k, int):
-        return k  # we already have the index
-
-    elif isinstance(k, str):
-        for key, value in self.stations.items():
-            if value.name == k:
-                return key
-
-    elif isinstance(k, Node):
-        for key, val in self.stations.items():
-            if val == k: return key
-
-    elif isinstance(k, GraphEntry):
-        for station_number, station in self.stations.items():
-            if station.number == k.node:
-                return station_number
-
-    print(f"Didn't find a key: {k.number}")
+    def __hash__(self):
+        return hash((self.node, self.edge))
 
 
 class Graph:
@@ -56,7 +30,7 @@ class Graph:
     savefile = ""
 
     def __init__(self, _lines, _stations, _timetables, savefile="save.pickle"):
-        self.station_lookup = NodeLookup(get_station_index)
+        self.station_lookup = StationLookup()
         self.timetables = _timetables
         self.savefile = savefile
 
@@ -81,21 +55,17 @@ class Graph:
 
             self.station_lookup[number] = Node(number, lat, lon, name)
 
-        self.adjList = NodeLookup(get_adjlist_index, stations=self.station_lookup)
+        self.adjList = AdjacentList()
 
         for line in _lines:
             stops = line['stops']
             for prev, cur in overlapping_pairs(stops):
                 if (cur['number'] in self.station_lookup) and (prev['number'] in self.station_lookup):
-                    self.setBoth(self.station_lookup[prev['number']], self.station_lookup[cur['number']], Edge('public', line['number']))
-
-    # TODO
-    # def __new__(cls, *args, **kwargs):
-    #     if Path(savefile).is_file():
-    #         with open(savefile, 'rb') as f:
-    #             return pickle.load(f)
-    #     else:
-    #         return super().__new__(cls, args, kwargs)
+                    # todo transport network
+                    new_edge = Edge('public', 'dpmp', line['number'])
+                    prev_node = self.station_lookup[prev['number']]
+                    cur_node = self.station_lookup[cur['number']]
+                    self.setBoth(prev_node, cur_node, new_edge)
 
     def makeNode(self, node: int):
         if node not in self.adjList:

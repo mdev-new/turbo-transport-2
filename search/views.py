@@ -1,33 +1,16 @@
 from django.shortcuts import render
 
-from .Graph import Graph
-from .PathFinder import PathFinder
-from .utils import get_dpmp, overlapping_pairs
+from search.pathfinder.graph.Graph import Graph
+from search.pathfinder.PathFinder import PathFinder
+from search.misc.utils import get_dpmp, overlapping_pairs
 
-from .dpmp import DpmpDataProvider
-from .cd import CDDataProvider
-from .khk import KhkDataProvider
+from search.data.dpmp import DpmpDataProvider
+from search.data.cd import CDDataProvider
+from search.data.khk import KhkDataProvider
 
 # from . import constants
 # from .utils import get_overpass
 # map = get_overpass(constants.OVERPASS_REQUEST)
-
-# Todo
-# - Timetables
-# - Search
-# - On foot
-# - Link buses
-# - Trains
-# - Maps - navigation
-# - Personalization - saving last searches
-# - Search in the future?
-
-# Far todo
-# - saving the graph to disk
-# - Kralovehradecky kraj (datakhk.cz)
-
-# Frontend
-# - A map
 
 data_providers = {
     'dpmp': DpmpDataProvider("3e86570d-56a1-4ec1-8012-c1a9f98d18cc"),
