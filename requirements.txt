@@ -1,5 +1,4 @@
 Django~=5.0.2
 requests~=2.31.0
-networkx~=3.2.1
-osmnx~=1.9.1
 astar~=0.99
+cachetools~=5.3.3

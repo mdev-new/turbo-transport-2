@@ -1,1 +1,1 @@
-from . import PathFinder
+from .PathFinder import PathFinder

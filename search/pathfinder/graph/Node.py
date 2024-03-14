@@ -26,5 +26,4 @@ class Node:
             return self.identifier == other.identifier
 
     def __hash__(self):
-        return self.identifier
-
+        return hash(self.identifier)

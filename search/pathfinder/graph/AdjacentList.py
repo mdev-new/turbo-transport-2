@@ -1,4 +1,4 @@
-from search.pathfinder.graph.Edge import GraphEntry, Node
+from search.pathfinder.graph import GraphEntry, Node
 
 
 class AdjacentList(dict):
@@ -13,7 +13,8 @@ class AdjacentList(dict):
 
         elif isinstance(k, Node):
             for key, val in self.stations.items():
-                if val == k: return key
+                if val == k:
+                    return key
 
         elif isinstance(k, GraphEntry):
             for station_number, station in self.stations.items():

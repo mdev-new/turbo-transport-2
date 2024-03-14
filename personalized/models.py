@@ -16,6 +16,6 @@ class Search(models.Model):
     # Delete the entry when either user, source or destination get removed
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     source = models.ForeignKey(Station, on_delete=models.CASCADE)
-    dest = models.ForeignKey(Station, on_delete=models.CASCADE)
+    destination = models.ForeignKey(Station, on_delete=models.CASCADE)
     urge = models.IntegerField() # Todo maybe IntegerChoiceField
     walk_speed = models.FloatField()

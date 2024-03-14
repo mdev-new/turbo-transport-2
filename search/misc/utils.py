@@ -4,6 +4,7 @@ from .constants import EARTH_RADIUS, DEG_TO_RAD
 
 import requests
 
+
 def get_overpass(url):
     return requests.get(url).json()
 

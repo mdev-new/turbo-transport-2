@@ -1,5 +1,6 @@
 from search.data import DataProvider
 
+
 # Kralovehradecky kraj most likely doesn't provide public data about
 # buses on-the-go.
 # So, everything will have to be pulled out from the timetable.

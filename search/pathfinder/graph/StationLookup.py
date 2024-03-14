@@ -1,7 +1,7 @@
 from search.pathfinder.graph import GraphEntry, Node
 
 
-class StationLookup(dict):  # dicts take a mapping or iterable as their optional first argument
+class StationLookup(dict):
     def get_index(self, k):
         if isinstance(k, int):
             return k  # we already have the index
