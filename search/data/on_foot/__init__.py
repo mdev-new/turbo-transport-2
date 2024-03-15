@@ -1,11 +1,11 @@
 import requests
 
-from search.data import DataProvider, RawNode, RawLine
+from search.data import AbstractDataProvider, RawStop, RawLine
 
 from functools import cache
 
 
-class OnFootDataProvider(DataProvider):
+class OnFootDataProvider(AbstractDataProvider):
     request_addr = ""
     data = {}
 

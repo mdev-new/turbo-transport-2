@@ -23,10 +23,13 @@ def logout(req):
 def last_searches(req):
     context = {
         # Todo pull this from db
-        'searches': enumerate([
-            'Strossova - Namesti republiky',
-            'Hlavni nadrazi - Nem.'
-        ])
+        'searches': [
+            {
+                'id': 0,
+                'source': 'Hlavni nadrazi',
+                'destination': 'Strossova'
+            }
+        ]
     }
     return render(req, 'personal/_last_searches.html', context)
 

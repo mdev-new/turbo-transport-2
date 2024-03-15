@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 import requests
 
-from search.data import DataProvider, RawNode, RawLine
+from search.data import AbstractDataProvider, RawStop, RawLine
 
 # Functions annotated with this won't change their response much, if ever.
 # We can cache these for the rest of the runtime of the program.
@@ -11,8 +11,10 @@ from functools import cache
 # Functions annotated with this change their response fairly often.
 from cachetools import cached, TTLCache
 
+from search.data.BaseDataProvider import RawPlatform, RawRouteStop
 
-class DpmpDataProvider(DataProvider):
+
+class DpmpDataProvider(AbstractDataProvider):
     api_key = ""
 
     def __init__(self, apikey: str):
@@ -35,25 +37,31 @@ class DpmpDataProvider(DataProvider):
             name = station['name']
             lat = station['gps_latitude']
             lon = station['gps_longitude']
-            platforms = station['platforms']
-            meta = {
-                'platforms': [
-                    DpmpPlatform(
-                        p['gps_latitude'],
-                        p['gps_longitude'],
-                        p['number']
-                    )
-                    for p in platforms
-                ]
-            }
+            processed_platforms = [
+                RawPlatform(
+                    p['number'],
+                    p['gps_latitude'],
+                    p['gps_longitude']
+                )
+                for p in station['platforms']
+            ]
 
-            processed_stations.append(RawNode(number, name, lat, lon))
+            processed_stations.append(RawStop(number, name, lat, lon, processed_platforms))
 
         return processed_stations
 
     @cache
     def get_lines(self):
-        return self.fetch("lines")
+        fetched_lines = self.fetch("lines")
+        processed_lines = []
+        for line in fetched_lines:
+            processed_stops = []
+            for s in line['stops']:
+                processed_stops.append(RawRouteStop(s['number'], s['name'], s['codes']))
+
+            processed_lines.append(RawLine(line['number'], processed_stops))
+
+        return processed_lines
 
     @cached(cache=TTLCache(maxsize=64, ttl=30))
     def get_all_vehicle_state(self):

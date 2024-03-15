@@ -1,22 +1,22 @@
-from search.data import DataProvider
+from search.data import AbstractDataProvider
 
 
-class CDDataProvider(DataProvider):
+class CDDataProvider(AbstractDataProvider):
 
     def get_stations(self):
-        pass
+        return []
 
     def get_lines(self):
-        pass
+        return []
 
     def get_all_vehicle_state(self):
-        pass
+        return []
 
     def get_line_connections(self, line):
-        pass
+        return []
 
     def get_station_connections(self, station):
-        pass
+        return []
 
     def get_connection(self, line, vehicle):
-        pass
+        return []

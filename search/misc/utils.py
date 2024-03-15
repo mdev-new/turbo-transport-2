@@ -28,3 +28,4 @@ def haversine(point_a, point_b):
 def overlapping_pairs(arr):
     for i in range(1, len(arr)):
         yield [arr[i - 1], arr[i]]
+
