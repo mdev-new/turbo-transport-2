@@ -6,9 +6,6 @@ class Node:
     lat = 0.0
     lon = 0.0
     name = ""
-    available_transport_methods = []
-    platform_for = -1
-    platform_number = -1
 
     def __init__(self, identifier: NodeId, lat: float, lon: float, name: str, platform_for=-1, platform_number=-1):
         self.identifier = identifier
