@@ -1,6 +1,6 @@
 import requests
 
-from search.data import AbstractDataProvider, RawStop, RawLine
+from search.data import AbstractDataProvider
 
 from functools import cache
 
@@ -13,12 +13,15 @@ class OnFootDataProvider(AbstractDataProvider):
         self.request_addr = request_addr
         self.data = self.fetch(self.request_addr)
 
+    def is_on_foot(self):
+        return True
+
     def fetch(self, addr):
         return requests.request("GET", addr).json()
 
     # Get nodes
     @cache
-    def get_stations(self):
+    def get_nodes(self):
         return []
 
     # Get edges/paths between nodes
