@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-
+from .Node import Node
 
 # Based on the DPMP API.
 
@@ -11,26 +11,9 @@ class Position:
 
 
 @dataclass
-class RawPlatform:
-    number: int
-    lat: float
-    lon: float
-
-
-@dataclass
-class RawStop:
-    identifier: int | str
-    name: str
-    lat: float
-    lon: float
-    platforms: list[RawPlatform] = field(default_factory=list)
-    meta: dict = field(default_factory=dict)  # Implementation custom metadata
-
-
-@dataclass
 class RawRouteStop:
     identifier: int
-    name: int
+    name: str
     codes: list[int]
 
 
@@ -84,25 +67,22 @@ class RawConnection:
 
 class AbstractDataProvider(ABC):
     @abstractmethod
-    def get_stations(self) -> list[RawStop]:
-        pass
+    def get_nodes(self) -> list[Node]: pass
 
     @abstractmethod
-    def get_lines(self) -> list[RawLine]:
-        pass
+    def get_lines(self) -> list[RawLine]: pass
 
     @abstractmethod
-    def get_line_connections(self, line) -> list[RawConnection]:
-        pass
+    def get_line_connections(self, line) -> list[RawConnection]: pass
 
     @abstractmethod
-    def get_station_connections(self, station):
-        pass
+    def get_station_connections(self, station): pass
 
     @abstractmethod
-    def get_connection(self, line, vehicle):
-        pass
+    def get_connection(self, line, vehicle): pass
 
     @abstractmethod
-    def get_all_vehicle_state(self) -> list[RawVehicleState]:
-        pass
+    def get_all_vehicle_state(self) -> list[RawVehicleState]: pass
+
+    @abstractmethod
+    def is_on_foot(self) -> bool: pass

@@ -2,14 +2,12 @@
 
 {% block body %}
 
-<script>
-$(document).ready(() => {
-    setTimeout(() => {
-      $('select').selectize({
-        sortField: 'text'
-      });
-    }, 250)
-});
+<script defer>
+setTimeout(() => {
+  $('select').selectize({
+    sortField: 'text'
+  });
+}, 250)
 
 function getUrgeString(urge) {
     switch(Number.parseInt(urge)) {
@@ -32,14 +30,25 @@ function updateSpeed(element) {
     document.getElementById("walk_speed_number").innerHTML = `${element.value} km/h`
 }
 
+function toggleDisplay(elemId) {
+	let style = document.getElementById('recent').style;
+	if (!style.display || style.display === 'none') style.display = 'block';
+	else style.display = 'none';
+}
+
+
+updateSpeed(document.getElementById('walk_speed'))
+updateUrge(document.getElementById('urge'))
+
 </script>
 
-<aside class="float-right" hx-get="/last_searches" hx-trigger="load" hx-target="this" hx-swap="innerHTML">
+<button type="button" onclick="toggleDisplay('recent')">Zobrazit posledni hledani</button>
+
+<aside id="recent" class="md:float-right hidden" hx-get="/last_searches" hx-trigger="load" hx-target="this" hx-swap="innerHTML">
 </aside>
 
-
 <div class="flex flex-col items-center gap-y-8">
-    <form hx-post="/search" hx-target="#results" hx-target-500="#status" class="flex flex-col gap-2 min-w-20 hover:shadow-lg hover:bg-white hover:border-0 border-4 p-4 min-h-[45vh]">
+    <form hx-post="/search" hx-target="#results" hx-target-500="#status" class="flex flex-col gap-2 min-w-[60vw] hover:shadow-lg hover:bg-white hover:border-0 border-4 p-4 min-h-[45vh]">
         {% csrf_token %}
         <div class="flex flex-row gap-2">
             <div class="flex flex-col gap-2 w-1/2 text-center">
@@ -54,13 +63,13 @@ function updateSpeed(element) {
             </div>
         </div>
         <hr>
-        <div class="flex flex-row gap-2">
-            <div class="flex flex-col gap-2 text-center items-center">
+        <div class="flex flex-row gap-2 justify-evenly">
+            <div class="flex flex-col gap-2 text-center items-center w-1/2">
                 <label for="urge">Uroven spechu</label>
                 <input type="range" class="w-1/2" min="0" max="5" id="urge" name="urge" onchange="updateUrge(this)">
                 <i class="text-lg" id="urge_text"></i>
             </div>
-            <div class="flex flex-col gap-2 text-center items-center">
+            <div class="flex flex-col gap-2 text-center items-center w-1/2">
                 <label for="walk_speed">Rychlost chuze</label>
                 <input type="range" class="w-1/2" min="1" max="16.1" step="2.5" id="walk_speed" name="walk_speed" onchange="updateSpeed(this)">
                 <i class="text-lg" id="walk_speed_number"></i>
@@ -71,11 +80,6 @@ function updateSpeed(element) {
     </form>
     <div id="results"></div>
 </div>
-
-<script>
-    updateSpeed(document.getElementById('walk_speed'))
-    updateUrge(document.getElementById('urge'))
-</script>
 
 {% endblock %}
 

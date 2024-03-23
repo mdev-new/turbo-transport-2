@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 import requests
 
-from search.data import AbstractDataProvider, RawStop, RawLine
+from search.data import AbstractDataProvider, RawLine, RawRouteStop
 
 # Functions annotated with this won't change their response much, if ever.
 # We can cache these for the rest of the runtime of the program.
@@ -11,7 +11,7 @@ from functools import cache
 # Functions annotated with this change their response fairly often.
 from cachetools import cached, TTLCache
 
-from search.data.BaseDataProvider import RawPlatform, RawRouteStop
+from search.data.Node import Node
 
 
 class DpmpDataProvider(AbstractDataProvider):
@@ -19,6 +19,9 @@ class DpmpDataProvider(AbstractDataProvider):
 
     def __init__(self, apikey: str):
         self.api_key = apikey
+
+    def is_on_foot(self):
+        return False
 
     def fetch(self, thing):
         return requests.request(
@@ -28,28 +31,19 @@ class DpmpDataProvider(AbstractDataProvider):
         ).json()
 
     @cache
-    def get_stations(self):
-        json_stations = self.fetch("stations")
-        processed_stations = []
+    def get_nodes(self):
+        stations_object = self.fetch("stations")
 
-        for station in json_stations:
-            number = station['number']
-            name = station['name']
-            lat = station['gps_latitude']
-            lon = station['gps_longitude']
-            processed_platforms = [
-                RawPlatform(
-                    p['number'],
-                    p['gps_latitude'],
-                    p['gps_longitude']
-                )
-                for p in station['platforms']
-            ]
+        return [
+            Node(
+                station['gps_latitude'],
+                station['gps_longitude'],
+                station['name'],
+                station['number']
+            ) for station in stations_object
+        ]
 
-            processed_stations.append(RawStop(number, name, lat, lon, processed_platforms))
-
-        return processed_stations
-
+    # TO FUCKING DO
     @cache
     def get_lines(self):
         fetched_lines = self.fetch("lines")
