@@ -2,10 +2,10 @@
 Todo
 ----
  - [-] Search
-  - [x] Basic search
+  - [-] Basic search
  - [ ] Fix filtering
  - [ ] Timetables
- - [ ] Other data providers (link buses, trains, on foot, ...)
+ - [-] Other data providers (link buses, trains, on foot, ...)
  - [ ] Search in the future?
 
 Far todo

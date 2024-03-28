@@ -48,28 +48,28 @@ updateUrge(document.getElementById('urge'))
 </aside>
 
 <div class="flex flex-col items-center gap-y-8">
-    <form hx-post="/search" hx-target="#results" hx-target-500="#status" class="flex flex-col gap-2 min-w-[60vw] hover:shadow-lg hover:bg-white hover:border-0 border-4 p-4 min-h-[45vh]">
+    <form hx-post="/search" hx-target="#results" hx-target-500="#status" class="flex flex-col sm:gap-2 min-w-[60vw] hover:shadow-lg hover:bg-white sm:p-2 min-h-[45vh]">
         {% csrf_token %}
-        <div class="flex flex-row gap-2">
-            <div class="flex flex-col gap-2 w-1/2 text-center">
-                <label for="from">Vychozi stanice</label>
+        <div class="flex flex-row sm:gap-2">
+            <div class="flex flex-col sm:gap-2 w-1/2 text-center">
+                <label for="from">Zacatek</label>
                 <select id="from" name="from" class="text-2xl" hx-get="/stations" hx-trigger="load" hx-target="this" hx-swap="innerHTML">
                 </select>
             </div>
-            <div class="flex flex-col gap-2 w-1/2 text-center">
-                <label for="to">Konecna stanice</label>
+            <div class="flex flex-col sm:gap-2 w-1/2 text-center">
+                <label for="to">Konec</label>
                 <select id="to" name="to" class="text-2xl" hx-get="/stations" hx-trigger="load" hx-target="this" hx-swap="innerHTML">
                 </select>
             </div>
         </div>
         <hr>
-        <div class="flex flex-row gap-2 justify-evenly">
-            <div class="flex flex-col gap-2 text-center items-center w-1/2">
-                <label for="urge">Uroven spechu</label>
+        <div class="flex flex-row sm:gap-2 justify-evenly">
+            <div class="flex flex-col sm:gap-2 text-center items-center w-1/2">
+                <label for="urge">Spech</label>
                 <input type="range" class="w-1/2" min="0" max="5" id="urge" name="urge" onchange="updateUrge(this)">
                 <i class="text-lg" id="urge_text"></i>
             </div>
-            <div class="flex flex-col gap-2 text-center items-center w-1/2">
+            <div class="flex flex-col sm:gap-2 text-center items-center w-1/2">
                 <label for="walk_speed">Rychlost chuze</label>
                 <input type="range" class="w-1/2" min="1" max="16.1" step="2.5" id="walk_speed" name="walk_speed" onchange="updateSpeed(this)">
                 <i class="text-lg" id="walk_speed_number"></i>

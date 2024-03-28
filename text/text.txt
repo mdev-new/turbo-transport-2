@@ -1,0 +1,5 @@
+Timetables - Add data when the connection goes (work days, weekends, ...)
+
+
+If an invalid connection (for ex. it went 5 hrs ago) is found,
+just find the next exact same conn (for ex. tommorow)

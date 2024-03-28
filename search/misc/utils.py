@@ -9,11 +9,7 @@ def get_overpass(url):
     return requests.get(url).json()
 
 
-def haversine(point_a, point_b):
-    # These get converted to radians directly in the calculations.
-    lat1, lon1 = point_a
-    lat2, lon2 = point_b
-
+def haversine(lat1, lon1, lat2, lon2):
     d_lat = (lat2 - lat1) * DEG_TO_RAD
     d_lon = (lon2 - lon1) * DEG_TO_RAD
 
@@ -28,4 +24,3 @@ def haversine(point_a, point_b):
 def overlapping_pairs(arr):
     for i in range(1, len(arr)):
         yield [arr[i - 1], arr[i]]
-

@@ -1,0 +1,108 @@
++=========+
+|OREDO API|
++=========+
+
+MAPA - https://tabule.oredo.cz/idspublic/
+API - https://tabule.oredo.cz/idspublicservices/api
+
+API key - Doesn't exist, not needed
+
+/service/position
+/servicedetail?id=SERVICE_ID - Detail vlaku
+/station - All stations
+/station/STATION_ID/nextservices
+/zone
+/contactpoint
+
+- Zeleznice
+- Linkovy autobusy
+
++========+
+|DPMP API|
++========+
+
+API key (static): "3e86570d-56a1-4ec1-8012-c1a9f98d18cc"
+
+/api/codes => Kody zastavek (napr. bezbarierova, atd.)
+/api/lines => Seznam vsech linek a jejich zastavek
+/api/stations => Info o vsech zastavkach
+/api/route?line=LINE_NUMBER => Route linky - GPS souradnice
+/api/buses => Aktualni stav vsech autobusu ktery jedou
+/api/stationConnections?station=STATION_NUMBER
+/api/busConnectionDetail?line=LINE_NUMBER&number=BUS_NUMBER
+/api/currentConnections&line=LINE_NUMBER
+
+
++=============================+
+|JIZDNI RADY (CELOREPUBLIKOVE)|
++=============================+
+
+FTP - Annonymous access - ftp://ftp.cisjr.cz
+HTTP - https://portal.cisjr.cz/pub/
+
+Datove formaty:
+ - JDF (text/csv)
+ - NeTEx - proprietary XML
+ - CZPTT XML (only railway?)
+
+> JDF autobusové dopravy (/JDF/JDF.zip), JDF MHD (/draha/mestske/JDF.zip), XML drážní dopravy (/draha/celostatni/szdc/) a to samé převedené do NeTExu (/netex).
+> Vlaková data jsou aktuálně už asi kompletní, obsahují například i tarifní zóny IDS.
+> Ani JDF ani CZPTT XML neobsahuje polohy zastávek/stanic.
+
++====================+
+|OSMnx graph selector|
++====================+
+
+["type"!="multipolygon"]["access"!="private"]["highway"~"footway|path|pedestrian|service|residential|living_street|steps|sidewalk|track|cycleway"]
+
+
++========+
+|Data KHK|
++========+
+
+https://www.datakhk.cz/search
+
+https://www.datakhk.cz/datasets/e64c92bd463e442593e695137e061a35_0/explore
+https://www.datakhk.cz/datasets/ab928607832141f8bebb36261593107a_0/explore
+https://www.datakhk.cz/datasets/a7f461928f5f49fcaa7d129b6f5ebb71_0/explore
+https://www.datakhk.cz/datasets/ebc0da36c2bd4fdb9505ddab8b789007_0/explore
+
+
++====+
+|SZDC|
++====+
+
+https://grapp.spravazeleznic.cz/
+
++============+
+|Dalsi zdroje|
++============+
+
+
+-----
+
+https://dadof.ggu.cz/d/3-zdroje-dat-o-ve-ejn-doprav
+https://dvdkon.ggu.cz/articles/netex-html/
+https://dvdkon.ggu.cz/articles/openalt-2023-cisjr/
+https://digilib.k.utb.cz/bitstream/handle/10563/40978/paukert_2017_dp.pdf
+https://dspace.cuni.cz/bitstream/handle/20.500.11956/101115/130239304.pdf
+
+---
+
+https://gitlab.com/dvdkon/jrutil
+https://github.com/MobilityData/awesome-transit
+
+---
+
+http://netex.uk/netex/doc/2019.05.07-v1.1_FinalDraft/prCEN_TS_16614-PI_Profile_FV_%28E%29-2019-Final-Draft-v3.pdf
+https://portal.cisjr.cz/pub/netex/CISJR_NeTEx.pdf
+
+https://registr.dopravniinfo.cz/cs/sources/cz-mdcr_NeTEx-timetables-v1.0/
+
+---
+
+https://www.lupa.cz/n/jizdni-rady/
+
+www.openalt.cz
+
+https://data.slovensko.sk/datasety/ca4cb74c-7192-4198-b074-34acd9d295e7

@@ -1,5 +1,5 @@
 Django~=5.0.2
 requests~=2.31.0
-astar~=0.99
 cachetools~=5.3.3
-networkx~=3.2.1
+networkx @ git+https://github.com/mdev-new/networkx-fork
+osmnx~=1.9.1

@@ -1,88 +1,101 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from .Node import Node
+from typing import TypedDict
+from search.misc.utils import overlapping_pairs, haversine
+import networkx as nx
 
-# Based on the DPMP API.
+from enum import Enum
 
-@dataclass
-class Position:
+
+class TransportMethod(Enum):
+    FOOT = 0
+    BIKE = 1
+    CITY_TRANSPORT = 2
+    LINK_BUS = 3
+    TRAIN = 4
+    CAR = 5
+
+class NodeData(TypedDict):
     lat: float
     lon: float
-
-
-@dataclass
-class RawRouteStop:
-    identifier: int
     name: str
-    codes: list[int]
+    ident: None | any
 
 
-@dataclass
-class RawLine:
-    number: int  # Bus line number
-    stops: list[RawRouteStop]
+class Node:
+    lat = 0.0
+    lon = 0.0
+    ident = None  # Identifier that's specific to every transport company
+    name = ""
+
+    def __init__(self, lat: float, lon: float, name: str, ident=None):
+        self.lat = lat
+        self.lon = lon
+        self.name = name
+        self.ident = ident
+
+    # For serializing to graph node properties
+    def as_dict(self) -> NodeData:
+        return {
+            'lat': self.lat,
+            'lon': self.lon,
+            'name': self.name,
+            'ident': self.ident
+        }
 
 
-@dataclass
-class RawRoute:
-    line: int
-    route: list[Position]
+class Edge:
+    transport_method: TransportMethod
+    transport_carrier: str
+    public_line: int = None
+    public_number: int = None
+    length: float = None
+    start_offset: int = 0  # After how many seconds after 00:00 does the thing depart
+
+    def __init__(self, transport_method=TransportMethod.FOOT, carrier='pedestrian', public_line=None, path=None):
+        self.transport_method = transport_method
+        self.transport_carrier = carrier
+        self.public_line = public_line
+        if path is not None:
+            self.length = 0.0
+            for a, b in overlapping_pairs(path):
+                self.length += haversine(*a, *b)
+
+    # For serializing to graph edge properties
+    def as_dict(self):
+        return {
+            'method': self.transport_method,
+            'carrier': self.transport_carrier,
+            'line': self.public_line,
+            'length': self.length,
+            'start_time': self.start_offset
+        }
 
 
-# Vehicle state
-@dataclass
-class RawVehicleState:
-    line: int
-    lat: float
-    lon: float
-    destination_stop: int
-    current_stop: int
-    time_diff: int
-    speed: float = 0.0
+class Connection:
+    pass
 
 
-# Connection
-@dataclass
-class RawConnectionStop:
-    number: int
-    index: int
-    lat: float
-    lon: float
-    distance: int
-    arrival_time: int  # UNIX timestamp
-    departure_time: int
-    name: str = ""
-    platform: int = 1
+class VehicleState:
+    pass
 
 
-@dataclass
-class RawConnection:
-    line_number: int
-    connection_number: int
-    stops: list[RawConnectionStop]
-    route_start_time: int
-    route_end_time: int
-    bus_info: RawVehicleState = None
+class Line:
+    pass
 
 
 class AbstractDataProvider(ABC):
     @abstractmethod
-    def get_nodes(self) -> list[Node]: pass
+    def get_graph(self, provider_name: str) -> nx.MultiDiGraph: pass
 
     @abstractmethod
-    def get_lines(self) -> list[RawLine]: pass
+    def get_line_connections(self, line) -> list[Connection]: pass
 
     @abstractmethod
-    def get_line_connections(self, line) -> list[RawConnection]: pass
+    def get_station_connections(self, station) -> list[Connection]: pass
 
     @abstractmethod
-    def get_station_connections(self, station): pass
+    def get_connection(self, line, vehicle) -> Connection: pass
 
     @abstractmethod
-    def get_connection(self, line, vehicle): pass
-
-    @abstractmethod
-    def get_all_vehicle_state(self) -> list[RawVehicleState]: pass
-
-    @abstractmethod
-    def is_on_foot(self) -> bool: pass
+    def get_all_vehicle_state(self) -> list[VehicleState]: pass
