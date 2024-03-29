@@ -63,13 +63,5 @@ class DpmpDataProvider(AbstractDataProvider):
         return self.fetch("buses")
 
     @cached(cache=TTLCache(maxsize=64, ttl=45))
-    def get_line_connections(self, line):
-        return self.fetch(f"currentConnections?line={line}")
-
-    @cached(cache=TTLCache(maxsize=64, ttl=45))
-    def get_station_connections(self, station):
-        return self.fetch(f"stationConnections?station={station}")
-
-    @cached(cache=TTLCache(maxsize=64, ttl=45))
     def get_connection(self, line, vehicle):
         return self.fetch(f"busConnectionDetail?line={line}&number={vehicle}")

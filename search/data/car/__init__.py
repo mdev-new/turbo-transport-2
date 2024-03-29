@@ -5,16 +5,16 @@ from search.data import AbstractDataProvider, TransportMethod
 
 from functools import cache
 
+# Todo gas prices, map
+# Todo road state (take into account any accidents etc)
 
-class PedestrianDataProvider(AbstractDataProvider):
+class CarDataProvider(AbstractDataProvider):
     north = 0
     south = 0
     west = 0
     east = 0
-    custom_filter = ""
 
     def __init__(self, north, south, west, east, custom_filter):
-        self.custom_filter = custom_filter
         self.north = north
         self.south = south
         self.west = west
@@ -27,10 +27,9 @@ class PedestrianDataProvider(AbstractDataProvider):
 
         G = ox.graph_from_bbox(
             bbox=(self.north, self.south, self.east, self.west),
-            network_type='walk',
+            network_type='drive_service',
             simplify=True,
-            truncate_by_edge=False,
-            custom_filter=self.custom_filter
+            truncate_by_edge=False
         )
         return G
 

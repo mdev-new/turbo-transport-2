@@ -3,7 +3,6 @@ What can I rebuild
 Stations of DPMP
 Iredo stations
 Routes of DPMP _without_ timetables
-Routes of Iredo in Khk _without_ timetables
 Walk graph (without connections to public transport)
 
 What do I need
@@ -12,6 +11,17 @@ Timetables of DPMP
 Timetables of Iredo
 
 
+!!! I can take positions of stops from OSM !!!
 
-----
-Aren't station/line connections useless if we have the timetable???
+---
+Other factors to include when on foot:
+ - weather?
+ - slope?
+
+Other factors to include in public transport:
+ - Cost of fare
+ - Real-time changes (delays etc)
+
+Other factors to include in a car:
+ - Cost of fuel (daily)
+ - Transport situation

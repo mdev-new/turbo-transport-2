@@ -4,9 +4,11 @@ from os import walk
 import requests
 import networkx as nx
 
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as ElemTree
 
 from search.data import AbstractDataProvider, Node
+
+from zipfile import ZipFile
 
 # Functions annotated with this won't change their response much, if ever.
 # We can cache these for the rest of the runtime of the program.
@@ -34,25 +36,21 @@ class IredoDataProvider(AbstractDataProvider):
 
         roots = []
 
-        for datadir in ['NeTEx_DrahyMestske', 'NeTEx_GVD2024']:
-            for (dirpath, dirnames, filenames) in walk(f'data/{datadir}'):
-                for filename in filenames:
-                    roots.append(ET.parse(filename).getroot())
+        # Load the NeTEx
+        for timetable_zip in ['DrahyMestske', 'GVD2024', 'VerejnaLinkovaDoprava']:
+            with ZipFile(f'data/NeTEx_{timetable_zip}.zip') as zf:
+                for file in zf.namelist():
+                    with zf.open(file) as f:
+                        roots.append(ElemTree.parse(f).getroot())
+
+        for root in roots:
+            pass
 
         return G
 
     @cached(cache=TTLCache(maxsize=64, ttl=45))
     def get_all_vehicle_state(self):
         return self.fetch("service/position")
-
-    @cached(cache=TTLCache(maxsize=64, ttl=45))
-    def get_line_connections(self, line):
-        raise NotImplementedError
-        # return self.fetch(f"")
-
-    @cached(cache=TTLCache(maxsize=64, ttl=45))
-    def get_station_connections(self, station):
-        return self.fetch(f"station/{station}/nextservices")
 
     @cached(cache=TTLCache(maxsize=64, ttl=45))
     def get_connection(self, line, vehicle):

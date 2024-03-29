@@ -19,7 +19,7 @@ class NodeData(TypedDict):
     lat: float
     lon: float
     name: str
-    ident: None | any
+    ident: None | object
 
 
 class Node:
@@ -45,8 +45,8 @@ class Node:
 
 
 class Edge:
-    transport_method: TransportMethod
-    transport_carrier: str
+    transport_method: TransportMethod = None
+    transport_carrier: str = None
     public_line: int = None
     public_number: int = None
     length: float = None
@@ -87,12 +87,6 @@ class Line:
 class AbstractDataProvider(ABC):
     @abstractmethod
     def get_graph(self, provider_name: str) -> nx.MultiDiGraph: pass
-
-    @abstractmethod
-    def get_line_connections(self, line) -> list[Connection]: pass
-
-    @abstractmethod
-    def get_station_connections(self, station) -> list[Connection]: pass
 
     @abstractmethod
     def get_connection(self, line, vehicle) -> Connection: pass

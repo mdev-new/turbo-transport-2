@@ -60,19 +60,19 @@ def edge_weight(params: Parameters, n1, n2, edge, current_weight):
 
 
 def get_graph(filename):
-    G = None
+    # G = None
 
-    if not os.path.isfile(filename):
-        graphs = [
-            p.get_graph(p_name) for p_name, p in data_providers.items()
-        ]
+    # if not os.path.isfile(filename):
+    graphs = [
+        p.get_graph(p_name) for p_name, p in data_providers.items()
+    ]
 
-        G = nx.compose_all(graphs)
+    G = nx.compose_all(graphs)
 
-        nx.write_graphml(G, filename)
+    nx.write_graphml(G, filename)
 
-    else:
-        G = nx.read_graphml(filename, force_multigraph=True)
+    # else:
+    #     G = nx.read_graphml(filename, force_multigraph=True)
 
     assert G is not None, "No graph!"
     return G

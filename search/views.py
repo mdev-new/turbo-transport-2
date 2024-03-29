@@ -3,6 +3,7 @@ from django.shortcuts import render
 import networkx as nx
 
 from . import graph
+from .misc.constants import KMH_TO_MS
 
 from functools import partial
 
@@ -14,19 +15,19 @@ def index(req):
 
 
 def search(req):
-    data_source = req.POST if req.method == "POST" else req.GET
+    request_data = req.POST if req.method == "POST" else req.GET
 
-    source = data_source.get('from')
-    target = data_source.get('to')
-    walk_speed = float(data_source.get('walk_speed'))
-    urgency = int(data_source.get('urge'))
+    source = request_data.get('from')
+    target = request_data.get('to')
+    walk_speed = float(request_data.get('walk_speed'))
+    urgency = int(request_data.get('urge'))
 
-    if data_source.get('request_source') == 'link_history':
-        search_idx = data_source.get('search_idx')  # todo pull from db and all that
+    if request_data.get('request_source') == 'link_history':
+        search_idx = request_data.get('search_idx')  # todo pull from db and all that
 
     wt_func = partial(graph.edge_weight, {
         'walk_speed': walk_speed,
-        'cycle_speed': 5  # m/s => 18 km/h
+        'cycle_speed': 18 * KMH_TO_MS
     })
 
     path = nx.shortest_path(G, source, target, weight=wt_func)

@@ -64,15 +64,19 @@ updateUrge(document.getElementById('urge'))
         </div>
         <hr>
         <div class="flex flex-row sm:gap-2 justify-evenly">
-            <div class="flex flex-col sm:gap-2 text-center items-center w-1/2">
+            <div class="flex flex-col sm:gap-2 text-center items-center w-1/3">
                 <label for="urge">Spech</label>
                 <input type="range" class="w-1/2" min="0" max="5" id="urge" name="urge" onchange="updateUrge(this)">
                 <i class="text-lg" id="urge_text"></i>
             </div>
-            <div class="flex flex-col sm:gap-2 text-center items-center w-1/2">
+            <div class="flex flex-col sm:gap-2 text-center items-center w-1/3">
                 <label for="walk_speed">Rychlost chuze</label>
                 <input type="range" class="w-1/2" min="1" max="16.1" step="2.5" id="walk_speed" name="walk_speed" onchange="updateSpeed(this)">
                 <i class="text-lg" id="walk_speed_number"></i>
+            </div>
+            <div class="flex flex-col sm:gap-2 text-center items-center w-1/3">
+                <label for="car">Ja mam auto a ty ne</label>
+                <input type="checkbox" class="w-1/2" id="car" name="car">
             </div>
         </div>
         <hr>

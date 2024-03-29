@@ -2,18 +2,14 @@
 
 echo Stahuji...
 
-curl https://portal.cisjr.cz/pub/netex/NeTEx_GVD2024.zip
-curl https://portal.cisjr.cz/pub/netex/NeTEx_DrahyMestske.zip
-curl https://portal.cisjr.cz/pub/netex/NeTEx_VerejnaLinkovaDoprava.zip
-curl https://portal.cisjr.cz/pub/draha/celostatni/KJR2024_SZ.zip
-curl https://portal.cisjr.cz/pub/draha/celostatni/szdc/2024/JR2024.zip
+rem Vlaky?
+curl -O https://portal.cisjr.cz/pub/netex/NeTEx_GVD2024.zip
 
-echo Dekomprimuji...
+rem Trolejbusy, tramvaje, lanovky
+curl -O https://portal.cisjr.cz/pub/netex/NeTEx_DrahyMestske.zip
 
-rem todo unzip
+rem Linkove autobusy
+curl -O https://portal.cisjr.cz/pub/netex/NeTEx_VerejnaLinkovaDoprava.zip
 
-echo Cistim...
-
-rem todo delete zips
-
-rem todo download khk
+rem Mapa
+curl -O https://download.geofabrik.de/europe/czech-republic-latest.osm.bz2
