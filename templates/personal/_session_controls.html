@@ -1,5 +1,0 @@
-{% if user %}
-    <button hx-post="/logout" hx-target="status" hx-trigger="click">Odhlasit</button>
-{% else %}
-    <a href="/login" class="hover:text-blue-600 hover:underline">Prihlasit se nebo registrovat</a>
-{% endif %}

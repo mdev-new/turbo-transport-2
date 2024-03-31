@@ -1,0 +1,13 @@
+.idea/
+.vscode/
+venv/
+env/
+
+data/*
+!data/fetch.bat
+
+__pycache__
+cache
+
+*.graphml
+*.bz
